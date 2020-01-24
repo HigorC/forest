@@ -2,31 +2,43 @@ from node import Node
 
 root = None
 
-# a = Node(2)
-# c = Node(4)
-# e = Node(6)
-# g = Node(8)
-# b = Node(3, a, c)
-# f = Node(7, e, g)
-# d = Node(5, b, f)
-
 def insert(value):
-    nodeToSet = search(value, root)
-    if nodeToSet == None:
-        nodeToSet.value = value
+    global root
+    if root is None:
+        root = Node(value)
+    else:
+        insert_with_node(value, root)
 
-def search(value, node):
-    if node is None:
-        node = Node(value)
-        return node
-    elif value == node.value:
-        return node
-    elif value < node.value:
-        return search(value, node.l_child)
+def insert_with_node(value, node):
+    # if node is None:
+    #     return Node(value)
+    if value < node.value:
+        if node.l_child is None:
+            node.l_child = Node(value)
+        else:
+            insert_with_node(value, node.l_child)
     elif value > node.value:
-        return search(value, node.r_child)
+        if  node.r_child is None:
+            node.r_child = Node(value)
+        else:
+            insert_with_node(value, node.r_child)
+
+insert(10)
+insert(5)
+insert(3)
+insert(7)
+insert(1)
+insert(4)
+insert(6)
+insert(8)
+
+insert(15)
+insert(12)
+insert(17)
+insert(11)
+insert(13)
+insert(16)
+insert(18)
 
 
-root = insert(1)
-root = insert(2)
 print(root)

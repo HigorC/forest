@@ -5,4 +5,4 @@ class Node:
         self.r_child = r_child 
     
     def __str__(self):
-        return 'Node is {}, l_child is {}, r_child is {}'.format(self.value, self.l_child, self.r_child)
+        return '    {}\n    {}\n    {}'.format(self.value, self.l_child, self.r_child)
