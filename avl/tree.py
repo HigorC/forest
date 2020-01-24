@@ -10,19 +10,14 @@ def insert(value):
         insert_with_node(value, root)
 
 def insert_with_node(value, node):
-    # if node is None:
-    #     return Node(value)
-    if value < node.value:
-        if node.l_child is None:
-            node.l_child = Node(value)
-        else:
-            insert_with_node(value, node.l_child)
+    if node is None:
+        return Node(value)
+    elif value < node.value:
+        node.l_child = insert_with_node(value, node.l_child)
     elif value > node.value:
-        if  node.r_child is None:
-            node.r_child = Node(value)
-        else:
-            insert_with_node(value, node.r_child)
-
+        node.r_child = insert_with_node(value, node.r_child)
+    return node
+    
 insert(10)
 insert(5)
 insert(3)
