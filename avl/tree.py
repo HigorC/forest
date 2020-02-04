@@ -40,10 +40,10 @@ def calculate_balancing_factor(node):
         if node.left_child is None and node.right_child is None:
             node.balancing_factor = 0
         else:
-            left_tree_balance = node.left_child.balancing_factor + 1 if node.left_child is not None else 0
-            right_tree_balance = node.right_child.balancing_factor + 1 if node.right_child is not None else 0
+            left_tree_abs_balance = abs(node.left_child.balancing_factor) + 1 if node.left_child is not None else 0
+            right_tree__abs_balance = abs(node.right_child.balancing_factor) + 1 if node.right_child is not None else 0
 
-            node.balancing_factor = right_tree_balance - left_tree_balance
+            node.balancing_factor = right_tree__abs_balance - left_tree_abs_balance
 
             if node.balancing_factor is 2:
                 node = simple_left_rotation(node)
@@ -57,22 +57,3 @@ def inOrdem(node):
         inOrdem(node.left_child)
         print (node.value)
         inOrdem(node.right_child)
-
-
-# insert(10)
-# insert(5)
-# insert(3)
-# insert(7)
-# insert(1)
-# insert(4)
-# insert(6)
-# insert(8)
-
-# insert(15)
-# insert(12)
-# insert(17)
-# insert(11)
-# insert(13)
-# insert(16)
-# insert(18)
-
