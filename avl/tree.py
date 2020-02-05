@@ -17,7 +17,11 @@ def insert_with_node(value, node):
     elif value > node.value:
         node.right_child = insert_with_node(value, node.right_child)
 
-    return calculate_balancing_factor(node)
+    if node.getBalancingFactor() == 2:
+        print("Árvore desbalanceada...")
+        print("Realizando rotação simples a esquerda...")
+        return simple_left_rotation(node)
+    return node
 
 def simple_left_rotation(node):
     aux = node
@@ -28,29 +32,12 @@ def simple_left_rotation(node):
     node.balancing_factor -=1
     return node
 
-def calculate_balancing_factor_from_root():
-    global root
-    root = calculate_balancing_factor(root)
-
-def calculate_balancing_factor(node):
-    if node is not None:
-        calculate_balancing_factor(node.left_child)
-        calculate_balancing_factor(node.right_child)
-    
-        if node.left_child is None and node.right_child is None:
-            node.balancing_factor = 0
-        else:
-            left_tree_abs_balance = abs(node.left_child.balancing_factor) + 1 if node.left_child is not None else 0
-            right_tree__abs_balance = abs(node.right_child.balancing_factor) + 1 if node.right_child is not None else 0
-
-            node.balancing_factor = right_tree__abs_balance - left_tree_abs_balance
-
-            if node.balancing_factor is 2:
-                node = simple_left_rotation(node)
-    return node
-
 def printAvl():
     print(root)
+
+def teste():
+    print("altura", root.getHeight())
+    print("balanco", root.getBalancingFactor())
 
 def inOrdem(node):
     if node is not None:
