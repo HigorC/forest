@@ -27,17 +27,13 @@ def simple_left_rotation(node):
     aux = node
     node = node.right_child
     aux.right_child = node.left_child
-    aux.balancing_factor -=2
     node.left_child = aux
-    node.balancing_factor -=1
     return node
 
 def printAvl():
-    print(root)
-
-def teste():
     print("altura", root.getHeight())
     print("balanco", root.getBalancingFactor())
+    print(root)
 
 def inOrdem(node):
     if node is not None:
