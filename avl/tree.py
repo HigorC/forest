@@ -1,4 +1,4 @@
-from node import Node
+from avl import Node
 
 root = None
 

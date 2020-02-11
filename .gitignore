@@ -2,3 +2,5 @@ __pycache__/
 avl/__pycache__
 *.py[cod]
 .idea
+*.pyc
+__pycache__
