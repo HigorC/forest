@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from avl import Tree
 
 routes_blueprint = Blueprint('routes_blueprint', __name__)
@@ -8,7 +8,12 @@ def insert(valueToInsert):
     actualTreeArray = request.get_json()
 
     avlTree = Tree(actualTreeArray)
-
     avlTree.insert(int(valueToInsert))
 
-    return str(avlTree.getArrayTree())
+    result = {
+        'tree': avlTree.getArrayTree(),
+        'height': avlTree.getHeight(),
+        'log': avlTree.getLog()
+    }
+
+    return jsonify(result)
