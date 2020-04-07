@@ -1,26 +1,13 @@
-from utils import converter
+from flask import Flask
+from routes import routes_blueprint
+from assets.banner import banner as banner
+import os
 
-# arvore = {
-#     'value': 5,
-#     'left_child': {
-#         'value': 2
-#     },
-#     'rigth_child': {
-#         'value': 10
-#     }
-# }
-#
-# print (arvore)
-
-from avl import tree
-from utils import converter
-import json
-tree.insert(2)
-tree.insert(1)
-tree.insert(3)
-
-
-a = converter.treeToJson(tree.root, {})
-tree.printAvl()
-
-# print(json.dumps(tree.root))
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app = Flask(__name__)
+    print(banner)
+    print(">> A todo vapor na porta ", port, "\n")
+    app.register_blueprint(routes_blueprint)
+    app.run(host='0.0.0.0', port=port)
+    print("\n>> Fim da linha meu chapa!\n")
