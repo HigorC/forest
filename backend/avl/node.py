@@ -10,7 +10,7 @@ class Node:
     def getHeight(self):
         if self is not None:
             heightLeftChild = self.left_child.getHeight() if self.left_child is not None else 0
-            heightRightChild = self.ringht_child.getHeight() if self.right_child is not None else 0
+            heightRightChild = self.right_child.getHeight() if self.right_child is not None else 0
 
             if self.left_child is None and self.right_child is None:
                 return 1
