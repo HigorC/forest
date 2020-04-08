@@ -2,10 +2,12 @@ from flask import Flask
 from backend.routes import routes_blueprint
 from backend.assets.banner import banner as banner
 import os
+from flask_cors import CORS
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app = Flask(__name__)
+    CORS(app)
     print(banner)
     print(">> A todo vapor na porta ", port, "\n")
     app.register_blueprint(routes_blueprint)

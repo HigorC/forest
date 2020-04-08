@@ -3,17 +3,23 @@ from backend.avl import Tree
 
 routes_blueprint = Blueprint('routes_blueprint', __name__)
 
-@routes_blueprint.route('/avl/insert/<valueToInsert>', methods=['POST'])
+@routes_blueprint.route('/insert/<valueToInsert>', methods=['POST'])
 def insert(valueToInsert):
-    actualTreeArray = request.get_json()
+    requestJson = request.get_json()
+    actualTreeArray = requestJson.get('tree')
+    typeTree = requestJson.get('type')
 
-    avlTree = Tree(actualTreeArray)
-    avlTree.insert(int(valueToInsert))
+    tree = None
+
+    if typeTree == 'avl':
+        tree = Tree(actualTreeArray)
+
+    tree.insert(int(valueToInsert))
 
     result = {
-        'tree': avlTree.getArrayTree(),
-        'height': avlTree.getHeight(),
-        'log': avlTree.getLog()
+        'tree': tree.getArrayTree(),
+        'height': tree.getHeight(),
+        'log': tree.getLog()
     }
 
-    return jsonify(result)
+    return jsonify(result), 200, {'Content-Type': 'application/json'}
