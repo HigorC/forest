@@ -1,6 +1,6 @@
 from flask import Flask
-from routes import routes_blueprint
-from assets.banner import banner as banner
+from backend.routes import routes_blueprint
+from backend.assets.banner import banner as banner
 import os
 
 if __name__ == "__main__":

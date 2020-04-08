@@ -1,4 +1,4 @@
-from avl import Node
+from backend.avl import Node
 
 class Tree:
     root = None

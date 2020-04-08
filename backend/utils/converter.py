@@ -1,5 +1,3 @@
-from avl import node
-
 def jsonToTree(json):
     pass;
 

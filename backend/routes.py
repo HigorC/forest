@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from avl import Tree
+from backend.avl import Tree
 
 routes_blueprint = Blueprint('routes_blueprint', __name__)
 
