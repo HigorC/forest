@@ -2,9 +2,6 @@
     <section id="sidebar-section">
         <b-sidebar
                 position="static"
-                :mobile="mobile"
-                :expand-on-hover="expandOnHover"
-                :reduce="reduce"
                 :fullheight=true
                 type="is-light"
                 open>
@@ -20,11 +17,12 @@
                     <hr>
                     <b-menu-list label="Operações">
                         <b-field>
-                            <b-input placeholder="Número a inserir"
+                            <b-input placeholder="Número a inserir" v-model="numberToAdd"
                                      type="search">
                             </b-input>
                             <p class="control">
-                                <button class="button is-primary" @click="inserir">Inserir</button>
+                                <button class="button is-primary" @click="add" :disabled="!isValidToInsert()">Inserir
+                                </button>
                             </p>
                         </b-field>
                     </b-menu-list>
@@ -35,13 +33,20 @@
 </template>
 
 <script>
-    import api from '../scripts/api'
     export default {
         name: 'Menu',
+        data: () => {
+            return {
+                numberToAdd: ''
+            }
+        },
         methods: {
-            inserir: () => {
-                console.log('oi')
-                api.insert('avl', [1,2,3], 4)
+            isValidToInsert: function () {
+                return this.numberToAdd && !isNaN(this.numberToAdd);
+            },
+            add: function () {
+                this.$root.$emit('addOnTree', 'avl', this.numberToAdd);
+                this.numberToAdd = '';
             }
         }
     }

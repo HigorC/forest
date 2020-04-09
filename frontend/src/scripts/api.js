@@ -1,7 +1,7 @@
 const BASE_URL = 'http://localhost:5000';
 
 const insert = (typeTree, actualTree, valueToInsert) => {
-    fetch(
+    return fetch(
         `${BASE_URL}/insert/${valueToInsert}`,
         {
             method: 'POST',
@@ -15,9 +15,7 @@ const insert = (typeTree, actualTree, valueToInsert) => {
                 })
         }).then(res => {
         return res.json();
-    }).then(res => {
-        console.log(res);
-    })
+    });
 };
 
 const remove = () => {

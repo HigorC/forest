@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from backend.avl import Tree
+import jsons
 
 routes_blueprint = Blueprint('routes_blueprint', __name__)
 
@@ -17,7 +18,7 @@ def insert(valueToInsert):
     tree.insert(int(valueToInsert))
 
     result = {
-        'tree': tree.getArrayTree(),
+        'tree': jsons.dump(tree.getTree()),
         'height': tree.getHeight(),
         'log': tree.getLog()
     }
