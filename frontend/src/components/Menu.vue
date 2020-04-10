@@ -17,7 +17,7 @@
                     <hr>
                     <b-menu-list label="Operações">
                         <b-field>
-                            <b-input placeholder="Número a inserir" v-model="numberToAdd"
+                            <b-input placeholder="Número a inserir" v-model="numberToAdd" v-on:keyup.enter="add"
                                      type="search">
                             </b-input>
                             <p class="control">

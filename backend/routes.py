@@ -18,7 +18,8 @@ def insert(valueToInsert):
     tree.insert(int(valueToInsert))
 
     result = {
-        'tree': jsons.dump(tree.getTree()),
+        'treeInLevels': tree.getTreeLevelsAux(),
+        'arrayInOrderTree': tree.getArrayTree(),
         'height': tree.getHeight(),
         'log': tree.getLog()
     }

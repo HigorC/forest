@@ -50,7 +50,8 @@ class Tree:
         return node
 
     def simple_left_rotation(self, node):
-        self.log.append(f'Realizando rotação simples a esquerda entre o nó [{node.value}] e o nó [{node.right_child.value}]')
+        self.log.append(
+            f'Realizando rotação simples a esquerda entre o nó [{node.value}] e o nó [{node.right_child.value}]')
         aux = node
         node = node.right_child
         aux.right_child = node.left_child
@@ -58,7 +59,8 @@ class Tree:
         return node
 
     def simple_right_rotation(self, node):
-        self.log.append(f'Realizando rotação simples a direita entre o nó [{node.value}] e o nó [{node.left_child.value}]')
+        self.log.append(
+            f'Realizando rotação simples a direita entre o nó [{node.value}] e o nó [{node.left_child.value}]')
         aux = node
         node = node.left_child
         aux.left_child = node.right_child
@@ -92,3 +94,45 @@ class Tree:
 
     def getHeight(self):
         return self.root.getHeight()
+
+    def getTreeLevelsAux(self):
+        return self.getTreeLevels(self.root, {})
+
+    def getTreeLevels(self, node, levels):
+        findedValue, levelActualNode = self.findAux(node.value)
+
+        if levels.get(levelActualNode) is None:
+            levels[levelActualNode] = []
+
+        levels[levelActualNode].append(node.value)
+
+        if node.left_child is None:
+            if levels.get(levelActualNode + 1) is None:
+                levels[levelActualNode + 1] = []
+
+            levels[levelActualNode + 1].append(None)
+        else:
+            self.getTreeLevels(node.left_child, levels)
+
+        if node.right_child is None:
+            if levels.get(levelActualNode + 1) is None:
+                levels[levelActualNode + 1] = []
+
+            levels[levelActualNode + 1].append(None)
+        else:
+            self.getTreeLevels(node.right_child, levels)
+
+        return levels
+
+    def findAux(self, value):
+        return self.find(self.root, value, 1)
+
+    def find(self, node, value, actualLevel):
+        if node.value == value:
+            return node.value, actualLevel
+        elif value < node.value:
+            return self.find(node.left_child, value, actualLevel + 1)
+        elif value > node.value:
+            return self.find(node.right_child, value, actualLevel + 1)
+        else:
+            return -1, actualLevel
