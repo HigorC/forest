@@ -9,7 +9,7 @@
         <!--                {{node}}-->
         <!--            </span>-->
         <!--        </div>-->
-        <button @click="teste">aa</button>
+        <button @click="printTree">aa</button>
         <canvas id="treeCanvas">
         </canvas>
     </div>
@@ -27,77 +27,98 @@
             }
         },
         methods: {
-            teste: function () {
-                this.treeInLevels = {
-                    "1": [
-                        8
-                    ],
-                    "2": [
-                        4,
-                        10
-                    ],
-                    "3": [
-                        3,
-                        5,
-                        9,
-                        11
-                    ],
-                    "4": [
-                        1,
-                        null,
-                        null,
-                        6,
-                        null,
-                        null,
-                        null,
-                        12
-                    ],
-                    "5": [
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null
-                    ]
-                };
+            printTree: function () {
+                // this.treeInLevels = {
+                //     "1": [
+                //         8
+                //     ],
+                //     "2": [
+                //         4,
+                //         10
+                //     ],
+                //     "3": [
+                //         3,
+                //         5,
+                //         9,
+                //         11
+                //     ],
+                //     "4": [
+                //         null,
+                //         null,
+                //         null,
+                //         null,
+                //         null,
+                //         null,
+                //         null,
+                //         null
+                //     ]
+                // };
 
-                function makeCircle(x, y, radius) {
-                    ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+                function makeCircleWithText(x, y, radius, text) {
+                    ctx.beginPath();
                     ctx.fillStyle = '#0dbd51';
-                    ctx.fill();
+                    ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+
                     ctx.lineWidth = 1;
                     ctx.strokeStyle = '#003300';
                     ctx.stroke();
+
+                    ctx.fill();
+
+                    //Text
+                    ctx.beginPath();
+                    ctx.font = "20px Arial";
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = "white";
+                    ctx.fillText(text, x, y + 5);
+                    ctx.fill();
                 }
 
                 const canvas = document.getElementById("treeCanvas");
                 const ctx = canvas.getContext("2d");
+                ctx.font = "30px Arial";
                 // Fix blur problem
                 canvas.width = canvas.getBoundingClientRect().width;
                 canvas.height = canvas.getBoundingClientRect().height;
 
-                const centerX = canvas.width / 2;
-                // const centerY = canvas.height / 2;
-                const radius = 20;
+                const radius = 25;
 
-                const heightToJump = radius + 10;
+                const heightToJump = radius * 2;
+                const centerX = canvas.width / 2;
+
+                let actualCenterY = heightToJump;
 
                 for (let level in this.treeInLevels) {
-                    // console.log(this.treeInLevels[level])
-                    let actualCenterY = heightToJump;
-                    this.treeInLevels[level].forEach(value => {
-                        console.log(value)
-                        makeCircle(centerX, actualCenterY, radius);
-                        actualCenterY += radius * 2 + 10;
-                    })
+                    let actualCenterX = centerX / this.treeInLevels[level].length;
+                    const localWithToJump = actualCenterX;
+                    const that = this;
+                    let hasPassedHalf = false;
+                    this.treeInLevels[level].forEach((value, index) => {
+                        if (that.treeInLevels[level].length > 1 && !hasPassedHalf && index + 1 > that.treeInLevels[level].length / 2) {
+                            actualCenterX = centerX + localWithToJump;
+                            hasPassedHalf = true;
+                        }
+
+                        if (value) {
+                            if (that.treeInLevels[level].length > 1) {
+                                ctx.beginPath();
+                                ctx.moveTo(actualCenterX, actualCenterY - radius);
+
+                                if (index % 2 === 0) {
+                                    ctx.lineTo(actualCenterX + localWithToJump, actualCenterY - heightToJump);
+                                } else {
+                                    ctx.lineTo(actualCenterX - localWithToJump, actualCenterY - heightToJump);
+                                }
+
+                                ctx.stroke();
+                            }
+
+                            makeCircleWithText(actualCenterX, actualCenterY, radius, value);
+                        }
+                        actualCenterX = actualCenterX + (localWithToJump * 2);
+                    });
+                    actualCenterY += radius * 3;
                 }
-
-
-                // makeCircle(centerX, centerY, radius);
-                // makeCircle(330, 0, radius);
-
-
             }
         },
         mounted() {
@@ -107,6 +128,7 @@
                     console.log(result);
                     this.arrayInOrderTree = Object.assign([], result.arrayInOrderTree);
                     this.treeInLevels = Object.assign({}, result.treeInLevels);
+                    this.printTree();
                 }
             })
         }
